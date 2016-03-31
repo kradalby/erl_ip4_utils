@@ -42,20 +42,40 @@ ip_to_decimal_string2_test() ->
     ?assertEqual(Result, erl_ip4_utils:ip_to_decimal(IP)).
 
 network_to_ip_list_test() ->
-    Network = "192.168.0.0",
+    Network = {192,168,0,0},
     Bits = 24,
     [Head|_Tail] = erl_ip4_utils:network_to_ip_list(Network, Bits),
     FirstElement = {192,168,0,0},
     ?assertEqual(FirstElement, Head).
 
 network_to_ip_list2_test() ->
-    Network = "192.168.0.0",
+    Network = {192,168,0,0},
     Bits = 24,
     IPList = erl_ip4_utils:network_to_ip_list(Network, Bits),
     LastElement = {192,168,0,255},
     ?assertEqual(LastElement, lists:last(IPList)).
 
 network_to_ip_list3_test() ->
+    Network = {192,168,0,0},
+    Bits = 24,
+    IPList = erl_ip4_utils:network_to_ip_list(Network, Bits),
+    ?assertEqual(256, length(IPList)).
+
+network_to_ip_list_string_test() ->
+    Network = "192.168.0.0",
+    Bits = 24,
+    [Head|_Tail] = erl_ip4_utils:network_to_ip_list(Network, Bits),
+    FirstElement = {192,168,0,0},
+    ?assertEqual(FirstElement, Head).
+
+network_to_ip_list_string2_test() ->
+    Network = "192.168.0.0",
+    Bits = 24,
+    IPList = erl_ip4_utils:network_to_ip_list(Network, Bits),
+    LastElement = {192,168,0,255},
+    ?assertEqual(LastElement, lists:last(IPList)).
+
+network_to_ip_list_string3_test() ->
     Network = "192.168.0.0",
     Bits = 24,
     IPList = erl_ip4_utils:network_to_ip_list(Network, Bits),
