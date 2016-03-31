@@ -31,6 +31,16 @@ ip_to_decimal3_test() ->
     Result = 1474145679,
     ?assertNotEqual(Result, erl_ip4_utils:ip_to_decimal(IP)).
 
+ip_to_decimal_string_test() ->
+    IP = "87.221.81.95",
+    Result = 1474122079,
+    ?assertEqual(Result, erl_ip4_utils:ip_to_decimal(IP)).
+
+ip_to_decimal_string2_test() ->
+    IP = "8.8.8.8",
+    Result = 134744072,
+    ?assertEqual(Result, erl_ip4_utils:ip_to_decimal(IP)).
+
 network_to_ip_list_test() ->
     Network = "192.168.0.0",
     Bits = 24,
