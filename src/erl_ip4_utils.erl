@@ -6,7 +6,8 @@
     network_to_ip_list/2,
     bits_to_number_of_addresses/1,
     network_to_decimal_range/2,
-    decimal_range_to_ip_list/1
+    decimal_range_to_ip_list/1,
+    networks_to_ip_addresses/2
 ]).
 
 decimal_to_ip(Decimal) when is_integer(Decimal) ->
@@ -43,3 +44,9 @@ network_to_decimal_range(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
 
 decimal_range_to_ip_list({From, To}) when is_integer(From) andalso is_integer(To)->
     [decimal_to_ip(Decimal) || Decimal <- lists:seq(From, To)].
+
+networks_to_ip_addresses([], State) ->
+    State;
+networks_to_ip_addresses([{Network, Bits}|Tail], State) ->
+    NewState = State ++ network_to_ip_list(Network, Bits),
+    networks_to_ip_addresses(Tail, NewState).
