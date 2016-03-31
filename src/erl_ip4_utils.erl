@@ -1,12 +1,6 @@
 -module('erl_ip4_utils').
 
 -export([
-    ip_to_decimal/1,
-    network_to_ip_list/2
-]).
-
-
--export([
     decimal_to_ip/1,
     ip_to_decimal/1,
     network_to_ip_list/2,
