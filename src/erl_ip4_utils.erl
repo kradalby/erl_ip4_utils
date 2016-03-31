@@ -1,13 +1,51 @@
 -module('erl_ip4_utils').
 
-%% API exports
--export([]).
-
-%%====================================================================
-%% API functions
-%%====================================================================
+-export([
+    ip_to_decimal/1,
+    network_to_ip_list/2
+]).
 
 
-%%====================================================================
-%% Internal functions
-%%====================================================================
+-export([
+    decimal_to_ip/1,
+    ip_to_decimal/1,
+    network_to_ip_list/2,
+    bits_to_number_of_addresses/1,
+    network_to_decimal_range/2,
+    decimal_range_to_ip_list/1
+]).
+
+decimal_to_ip(Decimal) when is_integer(Decimal) ->
+    <<
+        A:8/big-unsigned-integer-unit:1,
+        B:8/big-unsigned-integer-unit:1,
+        C:8/big-unsigned-integer-unit:1,
+        D:8/big-unsigned-integer-unit:1,
+        _Rest/binary
+    >> = <<Decimal:32>>,
+    {A, B, C, D}.
+
+ip_to_decimal(Address) when is_list(Address) ->
+    {ok, Addr} = inet:parse_ipv4_address(Address),
+    ip_to_decimal(Addr);
+ip_to_decimal({A, B, C, D}) ->
+    <<Decimal:32>> = <<A, B, C, D>>,
+    Decimal.
+
+network_to_ip_list(Network, Bits) when is_list(Network) andalso is_integer(Bits) ->
+    {ok, Addr} = inet:parse_ipv4_address(Network),
+    network_to_ip_list(Addr, Bits);
+network_to_ip_list(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
+    Range = network_to_decimal_range(IP, Bits),
+    decimal_range_to_ip_list(Range).
+
+bits_to_number_of_addresses(Bits) when is_integer(Bits) ->
+    round(math:pow(2, 32-Bits)).
+
+network_to_decimal_range(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
+    From = ip_to_decimal(IP),
+    To = bits_to_number_of_addresses(Bits) + From - 1,
+    {From, To}.
+
+decimal_range_to_ip_list({From, To}) when is_integer(From) andalso is_integer(To)->
+    [decimal_to_ip(Decimal) || Decimal <- lists:seq(From, To)].
