@@ -47,5 +47,15 @@ Convert a decimal to an IP address:
     1> erl_ip4_utils:decimal_to_ip(134744072).
         {8,8,8,8}
 
-## Known bugs
-The range will only be correct if you start at the NETWORK address of that subnet.
+## Changelog
+
+### 0.0.3
+- adds network_bit_to_netmask(Bits) for 24 -> 255.255.255.0 conversions.
+- adds ip_to_network_address(IP, Bits) for 192.168.1.14/23 -> 192.168.0.0 conversions.
+- fixes issue #1, where network_to_decimal_range would not give a valid range if not given the network address of the network.
+
+### 0.0.2
+- adds networks_to_ip_addresses([{Network, Bits}], []) returns a big list of ips given N networks
+
+### 0.0.1
+- Initial release
