@@ -153,3 +153,27 @@ ip_to_network_address3_test() ->
     Expected = {8,0,0,0},
     Result = erl_ip4_utils:ip_to_network_address(IP, Bits),
     ?assertEqual(Expected, Result).
+
+network_bit_to_netmask_test() ->
+    Bits = 24,
+    Expected = {255,255,255,0},
+    Result = erl_ip4_utils:network_bit_to_netmask(Bits),
+    ?assertEqual(Expected, Result).
+
+network_bit_to_netmask2_test() ->
+    Bits = 12,
+    Expected = {255,240,0,0},
+    Result = erl_ip4_utils:network_bit_to_netmask(Bits),
+    ?assertEqual(Expected, Result).
+
+network_bit_to_netmask3_test() ->
+    Bits = 8,
+    Expected = {255,0,0,0},
+    Result = erl_ip4_utils:network_bit_to_netmask(Bits),
+    ?assertEqual(Expected, Result).
+
+network_bit_to_netmask4_test() ->
+    Bits = 32,
+    Expected = {255,255,255,255},
+    Result = erl_ip4_utils:network_bit_to_netmask(Bits),
+    ?assertEqual(Expected, Result).

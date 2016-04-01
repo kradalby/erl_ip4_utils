@@ -7,7 +7,9 @@
     bits_to_number_of_addresses/1,
     network_to_decimal_range/2,
     decimal_range_to_ip_list/1,
-    networks_to_ip_addresses/2
+    networks_to_ip_addresses/2,
+    ip_to_network_address/2,
+    network_bit_to_netmask/1
 ]).
 
 decimal_to_ip(Decimal) when is_integer(Decimal) ->
@@ -50,3 +52,9 @@ networks_to_ip_addresses([], State) ->
 networks_to_ip_addresses([{Network, Bits}|Tail], State) ->
     NewState = State ++ network_to_ip_list(Network, Bits),
     networks_to_ip_addresses(Tail, NewState).
+
+ip_to_network_address(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
+    derp.
+
+network_bit_to_netmask(Bits) when is_integer(Bits) ->
+    round(math:pow(2,32) - math:pow(2,32-Bits)).
