@@ -40,7 +40,8 @@ bits_to_number_of_addresses(Bits) when is_integer(Bits) ->
     round(math:pow(2, 32-Bits)).
 
 network_to_decimal_range(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
-    From = ip_to_decimal(IP),
+    NetworkStartIP = ip_to_network_address(IP, Bits),
+    From = ip_to_decimal(NetworkStartIP),
     To = bits_to_number_of_addresses(Bits) + From - 1,
     {From, To}.
 
@@ -53,8 +54,9 @@ networks_to_ip_addresses([{Network, Bits}|Tail], State) ->
     NewState = State ++ network_to_ip_list(Network, Bits),
     networks_to_ip_addresses(Tail, NewState).
 
-ip_to_network_address(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
-    derp.
+ip_to_network_address(_IP = {A,B,C,D}, Bits) when is_integer(Bits) ->
+    {MA, MB, MC, MD} = network_bit_to_netmask(Bits),
+    {A band MA, B band MB, C band MC, D band MD}.
 
 network_bit_to_netmask(Bits) when is_integer(Bits) ->
     decimal_to_ip(round(math:pow(2,32) - math:pow(2,32-Bits))).
