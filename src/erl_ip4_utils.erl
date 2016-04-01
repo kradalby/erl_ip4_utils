@@ -57,4 +57,4 @@ ip_to_network_address(IP = {_,_,_,_}, Bits) when is_integer(Bits) ->
     derp.
 
 network_bit_to_netmask(Bits) when is_integer(Bits) ->
-    round(math:pow(2,32) - math:pow(2,32-Bits)).
+    decimal_to_ip(round(math:pow(2,32) - math:pow(2,32-Bits))).
