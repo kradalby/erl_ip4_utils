@@ -1,6 +1,6 @@
 {application, 'erl_ip4_utils',
  [{description, "A collection of useful ip4 address convertion functions for Erlang."},
-  {vsn, "0.0.1"},
+  {vsn, "0.0.3"},
   {registered, [erl_ip4_utils]},
   {applications,
    [kernel,
