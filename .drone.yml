@@ -1,0 +1,15 @@
+build:
+    image: kradalby/ci-erlang:latest
+    pull: true
+    commands:
+      - rebar3 compile
+      - rebar3 eunit
+
+notify:
+  email:
+    from: drone@fap.no
+    host: smtp.stud.ntnu.no
+    port: 25
+    recipients:
+      - kradalby@kradalby.no
+
