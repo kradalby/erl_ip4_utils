@@ -1,4 +1,5 @@
 # erl_ip4_utils
+[![Build Status](https://drone.fap.no/api/badges/kradalby/erl_ip4_utils/status.svg)](https://drone.fap.no/kradalby/erl_ip4_utils)
 
 An OTP library
 
